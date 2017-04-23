@@ -36,8 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
 	            'attribute' => 'phones',
-	            'value' => function($model) {
-		            return implode(', ', ArrayHelper::getColumn($model->getPhones()->asArray()->all(), 'phone'));
+	            'content' => function($model) {
+		            return implode(', ', ArrayHelper::getColumn($model->phones, 'phone'));
 	            }
             ],
 

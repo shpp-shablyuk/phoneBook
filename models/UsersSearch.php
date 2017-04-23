@@ -45,12 +45,13 @@ class UsersSearch extends Users
     public function search($params)
     {
         $query = Users::find();
-	    $query->joinWith(['country', 'phones']);
+	    $query->with(['country', 'phones']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => ['pageSize' => 10]
         ]);
 
 	    $dataProvider->setSort([
