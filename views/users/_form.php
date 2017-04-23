@@ -16,7 +16,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
-    <?= $form->field($model, 'fio')->textInput(['maxlength' => true]) ?>
+	<?= $form->field($model, 'fio')->widget(\yii\jui\AutoComplete::classname(), [
+		'options' => [
+			'placeholder' => 'Type name',
+			'class' => 'form-control',
+		],
+		'clientOptions' => [
+			'source' => Url::to(['/names/list']),
+		],
+	]) ?>
 
     <?= $form->field($model, 'country_id')->widget(Select2::classname(), [
 	    'data' => $countries,
@@ -87,9 +95,6 @@ use yii\widgets\ActiveForm;
 			<?php DynamicFormWidget::end(); ?>
 		</div>
 	</div>
-
-
-
 
 	<div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

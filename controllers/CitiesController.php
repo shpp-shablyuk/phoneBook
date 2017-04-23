@@ -23,7 +23,5 @@ class CitiesController extends \yii\web\Controller
 		    ->asArray()->all();
 
 	    echo Json::encode(['output'=>$model, 'selected'=>'']);
-	    return;
     }
-
 }

@@ -10,6 +10,7 @@ use app\models\Users;
 use app\models\UsersSearch;
 use app\models\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -83,9 +84,6 @@ class UsersController extends Controller
         $model = new Users();
 	    $modelsPhones = [new Phones()];
 
-	    var_dump(Yii::$app->request->post());
-
-
 	    if ($model->load(Yii::$app->request->post())) {
 		    $modelsPhones = Model::createMultiple(Phones::classname());
 		    Model::loadMultiple($modelsPhones, Yii::$app->request->post());
@@ -112,12 +110,9 @@ class UsersController extends Controller
 				    }
 			    } catch (\Exception $e) {
 				    $transaction->rollBack();
-				    var_dump($e->getMessage());
 			    }
 		    }
 	    }
-
-	    var_dump($model->errors);
 
         return $this->render('create', [
             'model' => $model,
@@ -196,8 +191,6 @@ class UsersController extends Controller
 
         return $this->redirect(['index']);
     }
-
-
 
     /**
      * Finds the Users model based on its primary key value.
