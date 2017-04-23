@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
 	    'pluginOptions'=>[
 		    'depends'=>['countries'],
 		    'placeholder'=>'Select...',
-		    'url'=>Url::to(['/cities'])
+		    'url'=>Url::to(['/cities/list'])
 	    ],
     ]); ?>
 

@@ -2,20 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\Countries;
 use Yii;
-use app\models\Cities;
-use app\models\CitiesSearch;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
+use app\models\Countries;
+use app\models\CountrySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CitiesController implements the CRUD actions for Cities model.
+ * CountryController implements the CRUD actions for Countries model.
  */
-class CitiesController extends Controller
+class CountryController extends Controller
 {
     /**
      * @inheritdoc
@@ -45,12 +42,12 @@ class CitiesController extends Controller
     }
 
     /**
-     * Lists all Cities models.
+     * Lists all Countries models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CitiesSearch();
+        $searchModel = new CountrySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -60,7 +57,7 @@ class CitiesController extends Controller
     }
 
     /**
-     * Displays a single Cities model.
+     * Displays a single Countries model.
      * @param integer $id
      * @return mixed
      */
@@ -72,26 +69,25 @@ class CitiesController extends Controller
     }
 
     /**
-     * Creates a new Cities model.
+     * Creates a new Countries model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Cities();
+        $model = new Countries();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'countries' => ArrayHelper::map(Countries::find()->all(), 'id', 'name'),
             ]);
         }
     }
 
     /**
-     * Updates an existing Cities model.
+     * Updates an existing Countries model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,13 +101,12 @@ class CitiesController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'countries' => ArrayHelper::map(Countries::find()->all(), 'id', 'name'),
             ]);
         }
     }
 
     /**
-     * Deletes an existing Cities model.
+     * Deletes an existing Countries model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -123,33 +118,16 @@ class CitiesController extends Controller
         return $this->redirect(['index']);
     }
 
-	public function actionList()
-	{
-
-		$countryId = Yii::$app->request->post('depdrop_parents', '');
-		if (empty($countryId)) {
-			echo Json::encode(['output'=>'', 'selected'=>'']);
-		}
-
-		$model = Cities::find()
-		               ->select(['id', 'name'])
-		               ->where(['country_id' => $countryId])
-		               ->orderBy('name')
-		               ->asArray()->all();
-
-		echo Json::encode(['output'=>$model, 'selected'=>'']);
-	}
-
     /**
-     * Finds the Cities model based on its primary key value.
+     * Finds the Countries model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Cities the loaded model
+     * @return Countries the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Cities::findOne($id)) !== null) {
+        if (($model = Countries::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
