@@ -13,7 +13,7 @@ class UsersSearch extends Users
 {
 	public $city;
 	public $country;
-	public $phones;
+	public $phoneList;
     /**
      * @inheritdoc
      */
@@ -22,7 +22,7 @@ class UsersSearch extends Users
         return [
             [['city', 'country'], 'string'],
             [['phones'], 'integer'],
-            [['fio'], 'safe'],
+            [['fio', 'phoneList'], 'safe'],
         ];
     }
 
@@ -45,10 +45,9 @@ class UsersSearch extends Users
     public function search($params)
     {
         $query = Users::find();
-	    $query->with(['country', 'phones']);
+	    $query->joinWith([ 'country', 'phones'], true);
 
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pageSize' => 10]
@@ -68,6 +67,12 @@ class UsersSearch extends Users
 				    'desc' => ['cities.name' => SORT_DESC],
 				    'label' => 'cities.name',
 				    'default' => SORT_ASC
+			    ],
+			    'phoneList' => [
+				    'asc' => ['phones.phone' => SORT_ASC],
+				    'desc' => ['phones.phone' => SORT_DESC],
+				    'label' => 'phones.phone',
+				    'default' => SORT_ASC
 			    ]
 		    ]
 	    ]);
@@ -81,10 +86,11 @@ class UsersSearch extends Users
         }
 
         // grid filtering conditions
+	    $query->andFilterWhere(['like', 'phones.phone', $this->phoneList]);
 	    $query->andFilterWhere(['like', 'fio', $this->fio]);
         $query->andFilterWhere(['like', 'cities.name', $this->city]);
         $query->andFilterWhere(['like', 'countries.name', $this->country]);
-        $query->andFilterWhere(['like', 'phones.phone', $this->phones]);
+        $query->groupBy('users.id');
 
         return $dataProvider;
     }

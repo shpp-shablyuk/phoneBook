@@ -34,12 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'attribute' => 'city',
 	            'value' => 'city.name'
             ],
-            [
-	            'attribute' => 'phones',
-	            'content' => function($model) {
-		            return implode(', ', ArrayHelper::getColumn($model->phones, 'phone'));
-	            }
-            ],
+            'phoneList',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

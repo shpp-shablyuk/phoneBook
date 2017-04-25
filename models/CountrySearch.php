@@ -59,11 +59,11 @@ class CountrySearch extends Countries
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'phonecode' => $this->phonecode,
+            'id' => $this->id
         ]);
 
         $query->andFilterWhere(['like', 'sortname', $this->sortname])
+            ->andFilterWhere(['like', 'phonecode', $this->phonecode])
             ->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;

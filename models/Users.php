@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "users".
@@ -63,6 +64,11 @@ class Users extends \yii\db\ActiveRecord
 	public function getPhones()
 	{
 		return $this->hasMany(Phones::className(), ['user_id' => 'id']);
+	}
+
+	public function getPhoneList()
+	{
+		return implode(', ', ArrayHelper::getColumn($this->phones, 'phone'));
 	}
 
 	public function setcountry_id($id)

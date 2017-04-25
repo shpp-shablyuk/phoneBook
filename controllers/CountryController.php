@@ -28,7 +28,7 @@ class CountryController extends Controller
             ],
             'access' => [
 	            'class' => \yii\filters\AccessControl::className(),
-	            'only' => ['create','update'],
+	            'only' => ['create','update', 'delete'],
 	            'rules' => [
 		            // allow authenticated users
 		            [
