@@ -22,7 +22,7 @@ class NamesController extends \yii\web\Controller
 
 	    $names = Names::find()
 		    ->select(['Name'])
-		    ->where(['like','name', $q])->limit(10)->column();
+		    ->where(['like','name', $q . '%', false])->limit(10)->column();
 
 	    if ($names) {
 		    echo Json::encode($names);

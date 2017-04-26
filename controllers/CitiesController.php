@@ -120,12 +120,15 @@ class CitiesController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+	    if (Yii::$app->request->referrer){
+		    return $this->redirect(Yii::$app->request->referrer);
+	    } else {
+		    return $this->redirect(['index']);
+	    }
     }
 
 	public function actionList()
 	{
-
 		$countryId = Yii::$app->request->post('depdrop_parents', '');
 		if (empty($countryId)) {
 			echo Json::encode(['output'=>'', 'selected'=>'']);
